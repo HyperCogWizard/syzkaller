@@ -6,6 +6,7 @@ package coordinator
 import (
 	"context"
 	"errors"
+	"fmt"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -315,8 +316,8 @@ func TestCoordinator_MultiplePoolsConcurrentDeploy(t *testing.T) {
 	const numPools = 10
 	workers := make([]*fakeWorker, numPools)
 	for i := range numPools {
-		p := newWorkerPool(time.Now().String() + string(rune('A'+i)))
-		w := newFakeWorker(p.id + "-w")
+		p := newWorkerPool(fmt.Sprintf("pool-%d", i))
+		w := newFakeWorker(fmt.Sprintf("pool-%d-w", i))
 		workers[i] = w
 		p.Add(w)
 		require.NoError(t, gc.RegisterPool(p))

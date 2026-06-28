@@ -107,10 +107,7 @@ func (p *WorkerPool) ApplySpec(spec *FormalSpec) error {
 		p.appliedVer.Store(spec.Version)
 	}
 
-	if len(errs) > 0 {
-		return errors.Join(errs...)
-	}
-	return nil
+	return errors.Join(errs...)
 }
 
 // AppliedVersion returns the highest spec version that has been successfully

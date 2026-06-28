@@ -237,7 +237,8 @@ func (gc *GlobalCoordinator) executeRepair(req repairRequest) {
 }
 
 // splitCanary partitions pools into a canary set and the remainder. The canary
-// set contains at least one pool and at most ceil(fraction * total) pools.
+// set contains at least one pool and at most int(fraction * total) pools,
+// rounded up to a minimum of 1 when the product is less than 1.
 func splitCanary(pools []*WorkerPool, fraction float64) (canary, rest []*WorkerPool) {
 	n := int(float64(len(pools)) * fraction)
 	if n < 1 {
